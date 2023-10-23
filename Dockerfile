@@ -1,11 +1,13 @@
-FROM python:3.9-slim
-EXPOSE 8080
-RUN pip3 install streamlit
+# Create a virtual environment and activate it
+RUN python -m venv venv
+RUN /bin/bash -c "source venv/bin/activate"
 
-WORKDIR E:/Movie_Recommendation_System
-COPY . ./
+# Install any necessary dependencies within the virtual environment
+RUN venv/bin/python -m pip install --upgrade pip
+RUN venv/bin/python -m pip install -r requirements.txt
 
+# Expose the port on which Streamlit runs
+EXPOSE 8502
 
-
-
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+# Set the entrypoint to run the Streamlit app
+CMD ["venv/bin/streamlit", "run", "--server.port", "8502", "--server.enableCORS", "true", "app.py"]
