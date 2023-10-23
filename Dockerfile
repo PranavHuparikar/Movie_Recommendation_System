@@ -1,3 +1,11 @@
+FROM python:3.9
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the local requirements.txt and app.py files to the container
+COPY . /app
+
 # Create a virtual environment and activate it
 RUN python -m venv venv
 RUN /bin/bash -c "source venv/bin/activate"
